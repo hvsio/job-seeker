@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "job-getters-python"
+version = "0.1.0"
+description = ""
+authors = ["hvsio <alicjaharaszczuk@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+SQLAlchemy = "^2.0.25"
+pandas = "^2.1.4"
+sqlalchemy-utils = "^0.41.1"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

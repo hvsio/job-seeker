@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "aharas-de2-3-5"
+version = "0.1.0"
+description = ""
+authors = ["hvsio <alicjaharaszczuk@gmail.com>"]
+readme = "README.md"
+packages = [{include = "aharas_de2"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+apache-airflow = "^2.8.0"
+python-dotenv = "^1.0.0"
+pandas = "^2.1.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
