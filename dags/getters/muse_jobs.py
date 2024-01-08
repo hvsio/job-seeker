@@ -1,13 +1,13 @@
 def get_muse_jobs(**context):
-    import pandas as pd
-    import requests
-    from datetime import timedelta, datetime
     import json
     import random
+    from datetime import datetime, timedelta
+
+    import pandas as pd
+    import requests
 
     day_index = datetime.now().day
-    url = f"https://www.themuse.com/api/public/jobs?category=Computer%20and%20IT&category=Data%20Science&category=Software%20Engineer&category=Software%20Engineering&page={day_index}"
-
+    url = f'https://www.themuse.com/api/public/jobs?category=Computer%20and%20IT&category=Data%20Science&category=Software%20Engineer&category=Software%20Engineering&page={day_index}'
 
     def extract_job_info(job: dict):
         job_title = job['name']
@@ -16,9 +16,9 @@ def get_muse_jobs(**context):
         type = job['type']
         region = job['locations'][0]['name'].split(', ')[0]
         salary = random.randint(0, 7000)
-        date= datetime.fromisoformat(str(context["execution_date"])).strftime('%d/%m/%Y')
-
-
+        date = datetime.fromisoformat(str(context['execution_date'])).strftime(
+            '%d/%m/%Y'
+        )
 
         return {
             'job_title': [job_title],
@@ -27,9 +27,8 @@ def get_muse_jobs(**context):
             'type': [type],
             'region': [region],
             'salary': [salary],
-            'date': [date]
+            'date': [date],
         }
-
 
     # GET job postings
     resp = requests.get(url)

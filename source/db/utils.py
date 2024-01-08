@@ -1,7 +1,7 @@
 import logging
 import os
 
-from dotenv import load_dotenv, find_dotenv
+from dotenv import find_dotenv, load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Connection, Engine
 from sqlalchemy.exc import SQLAlchemyError

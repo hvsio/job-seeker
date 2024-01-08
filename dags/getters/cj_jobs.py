@@ -1,10 +1,9 @@
-
-
 def get_cj_jobs(**context):
-    import requests
-    import pandas as pd
     import random
-    from datetime import timedelta, datetime
+    from datetime import datetime, timedelta
+
+    import pandas as pd
+    import requests
 
     url = 'http://public.api.careerjet.net/search'
 
@@ -14,10 +13,12 @@ def get_cj_jobs(**context):
         link = job['url']
         type = None
         region = job['locations'].split(',')[0]
-        salary = job['salary'] if job['salary'] != 0 else random.randint(0, 7000)
-        date= datetime.fromisoformat(str(context["execution_date"])).strftime('%d/%m/%Y')
-
-
+        salary = (
+            job['salary'] if job['salary'] != 0 else random.randint(0, 7000)
+        )
+        date = datetime.fromisoformat(str(context['execution_date'])).strftime(
+            '%d/%m/%Y'
+        )
 
         return {
             'job_title': [job_title],
@@ -26,9 +27,8 @@ def get_cj_jobs(**context):
             'type': [type],
             'region': [region],
             'salary': [salary],
-            'date': [date]
+            'date': [date],
         }
-
 
     params = {
         'location': '*',
@@ -36,7 +36,7 @@ def get_cj_jobs(**context):
         'user_ip': '00.00.00.00',
         'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
         'pagesize': 50,
-        'locale_code': 'da_DK'
+        'locale_code': 'da_DK',
     }
 
     # GET job postings

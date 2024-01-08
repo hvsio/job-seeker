@@ -2,12 +2,11 @@ import logging
 import os
 
 from dotenv import load_dotenv
+from models import *
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.schema import CreateSchema
 from utils import get_db_connection
-
-from models import *
 
 logging.basicConfig()
 logging.root.setLevel(logging.INFO)

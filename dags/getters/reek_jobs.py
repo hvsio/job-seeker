@@ -1,13 +1,14 @@
 def get_reek_jobs(**context):
-    import requests
-    import pandas as pd
     import random
-    from datetime import timedelta, datetime
+    from datetime import datetime, timedelta
 
+    import pandas as pd
+    import requests
 
-    REEK_APIKEY = "OGQ5MjBkZmMtZTNiYy00ZGY5LTg0NjAtYzY3YjRjOWI0ODEwOg=="
-    url = "https://www.reed.co.uk/api/1.0/search?keywords=engineer,data,software"
-
+    REEK_APIKEY = 'OGQ5MjBkZmMtZTNiYy00ZGY5LTg0NjAtYzY3YjRjOWI0ODEwOg=='
+    url = (
+        'https://www.reed.co.uk/api/1.0/search?keywords=engineer,data,software'
+    )
 
     def extract_job_info(job: dict):
         job_title = job['jobTitle']
@@ -15,9 +16,14 @@ def get_reek_jobs(**context):
         link = job['jobUrl']
         type = None
         region = job['locationName']
-        salary = job['minimumSalary'] if job['minimumSalary'] != 0 else random.randint(0, 7000)
-        date= datetime.fromisoformat(str(context["execution_date"])).strftime('%d/%m/%Y')
-
+        salary = (
+            job['minimumSalary']
+            if job['minimumSalary'] != 0
+            else random.randint(0, 7000)
+        )
+        date = datetime.fromisoformat(str(context['execution_date'])).strftime(
+            '%d/%m/%Y'
+        )
 
         return {
             'job_title': [job_title],
@@ -26,14 +32,13 @@ def get_reek_jobs(**context):
             'type': [type],
             'region': [region],
             'salary': [salary],
-            'date': [date]
+            'date': [date],
         }
-
 
     # GET job postings
     headers = {'Authorization': f'Basic {REEK_APIKEY}'}
 
-    resp = requests.request("GET", url, headers=headers)
+    resp = requests.request('GET', url, headers=headers)
     jobs_jsonified = resp.json()['results']
 
     # convert to dataframe
