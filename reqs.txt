@@ -1,7 +1,0 @@
-- pull data in parallel
-- bash operator to clean the data once in a while
-- postgresoperator to ingest the data
-- postgres operator to make stats
-
-
-cd python/db && poetry run python3 create_db.py
