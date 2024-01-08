@@ -5,7 +5,7 @@ def get_reek_jobs(**context):
     import pandas as pd
     import requests
 
-    REEK_APIKEY = 'OGQ5MjBkZmMtZTNiYy00ZGY5LTg0NjAtYzY3YjRjOWI0ODEwOg=='
+    REEK_APIKEY = '[PLACEHOLDER]'
     url = (
         'https://www.reed.co.uk/api/1.0/search?keywords=engineer,data,software'
     )
@@ -19,7 +19,7 @@ def get_reek_jobs(**context):
         salary = (
             job['minimumSalary']
             if job['minimumSalary'] != 0
-            else random.randint(0, 7000)
+            else random.randint(3000, 7000)
         )
         date = datetime.fromisoformat(str(context['execution_date'])).strftime(
             '%d/%m/%Y'
