@@ -70,14 +70,6 @@ write_reek_to_postgres = PostgresOperator(
     dag=dag,
 )
 
-# get_stats = PostgresOperator(
-#    task_id="get_stats",
-#    postgres_conn_id='my_postgres',
-#    sql="stats.sql",
-#    dag=dag,
-# )
-
-
 def _calculate_state():
     pg_hook = PostgresHook.get_hook('my_postgres')
     with open('/tmp/stats.sql', 'r') as f:

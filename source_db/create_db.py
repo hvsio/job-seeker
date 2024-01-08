@@ -25,15 +25,16 @@ if __name__ == '__main__':
         if not conn.dialect.has_schema(conn, schema_name):
             logger.info(f'Creating dedicated schema')
             conn.execute(CreateSchema(schema_name))
-        Base.metadata.create_all(bind=engine)
-        # sequence needed for AUTOINCREMENT id in PostgreSQL
-        conn.execute(
-            text(
-                f"""
-                        CREATE SEQUENCE seq_jobbb START 1;
-                        ALTER TABLE {schema_name}.{tablename} ALTER COLUMN id SET DEFAULT nextval('seq_jobbb');
-                        """
+            Base.metadata.create_all(bind=engine)
+            # sequence needed for AUTOINCREMENT id in PostgreSQL
+            conn.execute(
+                text(
+                    f"""
+                            CREATE SEQUENCE seq_jobbb START 1;
+                            ALTER TABLE {schema_name}.{tablename} ALTER COLUMN id SET DEFAULT nextval('seq_jobbb');
+                            """
+                )
             )
-        )
+        
     except SQLAlchemyError as e:
         logger.error(f'Encountered error when establishing schema: {e}')

@@ -1,6 +1,6 @@
 def get_cj_jobs(**context):
     import random
-    from datetime import datetime, timedelta
+    from datetime import datetime
 
     import pandas as pd
     import requests

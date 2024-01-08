@@ -1,7 +1,7 @@
 def get_muse_jobs(**context):
     import json
     import random
-    from datetime import datetime, timedelta
+    from datetime import datetime
 
     import pandas as pd
     import requests
