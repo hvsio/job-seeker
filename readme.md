@@ -29,5 +29,8 @@ This main DAG orchestrates the entire data pipeline:
 
 
 ## Remarks
+- One of the API's returns salary in DKK, so I used the conversion 1DKK = 0.13€
+- I was planning to use Postgres for storing job data, so I decided to reuse the instance provided in the airflow docker-compose and just create another database within it meant for job data storage apart from Airflow logs.
 - not all APIs of choice provide the data defined in the the requirements. Hence some fields are NULL. To compensate the lack of salary information I am mocking the value in range between 3000€ and 7000€.
 - Although results from API's contain publish/expiry data of the job posting, those dates are not "daily" dates, the could be from beginning of 2023. That is why I am implying the "insertion_date" as the dag execution date to mimick that job postings are actually from the execution day.
+- ping me on Discord if you need credentials for Reek API and local Postgres to replicate the execution on your end :) 
