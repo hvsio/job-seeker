@@ -7,7 +7,7 @@ docker compose --env-file ./.env up airflow-init
 docker compose --env-file ./.env up -d
 
 # Create table for job data
-#poetry run python3 source_db/create_db.py
+poetry run python3 source_db/create_db.py
 
 # Add a connection to PostgreSQL for Airflow
 CONNECTION_URI="postgresql://$db_user:$db_pass@$db_host:$db_port/$tablename"

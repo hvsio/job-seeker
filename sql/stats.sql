@@ -34,7 +34,7 @@ LEFT JOIN (
         MAX(salary) AS daily_max,
         MIN(salary) AS daily_min,
         AVG(salary) AS daily_avg,
-        NOW()::date-1 AS date
+        NOW()::date AS date
     FROM 
         job_data.jobs AS j
     WHERE 
