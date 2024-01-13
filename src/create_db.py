@@ -1,10 +1,9 @@
 import logging
 import os
 
-from dotenv import load_dotenv
-from models import *
+from dotenv import find_dotenv, load_dotenv
+from models import Base
 from sqlalchemy import text
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.schema import CreateSchema
 from utils import get_db_connection
 
@@ -15,10 +14,8 @@ logger = logging.getLogger('DBprep')
 if __name__ == '__main__':
     load_dotenv(find_dotenv())
 
-    engine, conn = get_db_connection()
-    logger.info(f'Established connection at {engine}')
-
-    try:
+    with get_db_connection() as (engine, conn):
+        logger.info(f'Established connection with db engine: {engine}')
         schema_name = os.environ.get('schema_name')
         tablename = os.environ.get('tablename')
 
@@ -30,11 +27,8 @@ if __name__ == '__main__':
             conn.execute(
                 text(
                     f"""
-                            CREATE SEQUENCE seq_jobbb START 1;
-                            ALTER TABLE {schema_name}.{tablename} ALTER COLUMN id SET DEFAULT nextval('seq_jobbb');
+                            CREATE SEQUENCE sequence_job START 1;
+                            ALTER TABLE {schema_name}.{tablename} ALTER COLUMN id SET DEFAULT nextval('sequence_job');
                             """
                 )
             )
-        
-    except SQLAlchemyError as e:
-        logger.error(f'Encountered error when establishing schema: {e}')

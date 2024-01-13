@@ -7,6 +7,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+from airflow.utils.trigger_rule import TriggerRule
 from getters.cj_jobs import get_cj_jobs
 from getters.muse_jobs import get_muse_jobs
 from getters.reek_jobs import get_reek_jobs
@@ -51,27 +52,28 @@ pull_muse = PythonOperator(
 
 write_cj_to_postgres = PostgresOperator(
     task_id='write_cj_to_postgres',
-    postgres_conn_id='my_postgres',
+    postgres_conn_id='postgres',
     sql='cj_jobs.sql',
     dag=dag,
 )
 
 write_muse_to_postgres = PostgresOperator(
     task_id='write_muse_to_postgres',
-    postgres_conn_id='my_postgres',
+    postgres_conn_id='postgres',
     sql='muse_jobs.sql',
     dag=dag,
 )
 
 write_reek_to_postgres = PostgresOperator(
     task_id='write_reek_to_postgres',
-    postgres_conn_id='my_postgres',
+    postgres_conn_id='postgres',
     sql='reek_jobs.sql',
     dag=dag,
 )
 
+
 def _calculate_state():
-    pg_hook = PostgresHook.get_hook('my_postgres')
+    pg_hook = PostgresHook.get_hook('postgres')
     with open('/tmp/stats.sql', 'r') as f:
         sql_query = f.read()
     df = pg_hook.get_pandas_df(sql_query)
@@ -80,7 +82,10 @@ def _calculate_state():
 
 
 get_stats = PythonOperator(
-    task_id='get_stats', python_callable=_calculate_state, dag=dag
+    task_id='get_stats', 
+    python_callable=_calculate_state, 
+    trigger_rule=TriggerRule.ALL_DONE, #show statistics despite failures in the upstream
+    dag=dag
 )
 
 

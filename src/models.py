@@ -15,7 +15,7 @@ class Job(Base):
 
     id: Mapped[int] = mapped_column(
         Integer,
-        Sequence('seq_jobbb', start=1, increment=1),
+        Sequence('sequence_job', start=1, increment=1),
         primary_key=True,
         autoincrement=True,
     )
