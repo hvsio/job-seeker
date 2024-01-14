@@ -3,8 +3,12 @@ import re
 import numbers
 
 
-def extract_numerical_salary(salary_entry: numbers.Number, exchange_rate=1) -> numbers.Number:
-    """Retrieve only numerical value of salary. Crop any literals and currency special symbols. Choose the minimum salary if range is provided.
+def extract_numerical_salary(
+    salary_entry: numbers.Number, exchange_rate=1
+) -> numbers.Number:
+    """Retrieve only numerical value of salary.
+    Crop any literals and currency special symbols.
+    Choose the minimum salary if range is provided.
 
     Args:
         salary_entry (float): job postings salary
@@ -12,14 +16,18 @@ def extract_numerical_salary(salary_entry: numbers.Number, exchange_rate=1) -> n
     Returns:
         float | None : numerical salary value or None
     """
-    if isinstance(salary_entry, numbers.Number): return salary_entry
+    if isinstance(salary_entry, numbers.Number):
+        return salary_entry
     elif salary_entry and salary_entry != '':
         print(salary_entry, type(salary_entry))
-        found_numericals = list(filter(lambda x: len(x) != 0, re.findall(r'\d{0,6}', salary_entry)))
-        found_numericals = [float(numerical) for numerical in found_numericals]
+        found_numericals = list(
+            filter(lambda x: len(x) != 0, re.findall(r'\d{0,6}', salary_entry))
+        )
+        found_numericals = [float(num) for num in found_numericals]
         min_salary = min(found_numericals)
         return min_salary * exchange_rate
-    else: return None
+    else:
+        return None
 
 
 def extract_location(location: str) -> str:
@@ -35,7 +43,7 @@ def extract_location(location: str) -> str:
 
 
 def unify_date_format(date: datetime) -> datetime:
-    """Apply a common date format to the DB entries
+    """Apply a common date format to the DB entries.
 
     Args:
         date (datetime): returned date in various fromat
@@ -43,7 +51,4 @@ def unify_date_format(date: datetime) -> datetime:
     Returns:
         datetime: date formatted as dd/mm/YYYY
     """
-    return datetime.fromisoformat(str(date)).strftime(
-        '%d/%m/%Y'
-    )
-    
+    return datetime.fromisoformat(str(date)).strftime('%d/%m/%Y')

@@ -1,10 +1,16 @@
 from airflow.exceptions import AirflowFailException
 from airflow.hooks.http_hook import HttpHook
-from getters.utils.validators import extract_location, extract_numerical_salary, unify_date_format
+from getters.utils.validators import (
+    extract_location,
+    extract_numerical_salary,
+    unify_date_format,
+)
 from getters.utils.formatters import query_formatter
 
 
 def get_cj_jobs(**context):
+    """Function ingesting job posting from CarrerJet API and
+    extracting them from CarrerJet-specific JSON structure."""
 
     def extract_job_info(job: dict):
         dkk_to_euro = 0.13
@@ -30,14 +36,15 @@ def get_cj_jobs(**context):
     # GET job postings
     try:
         hook = HttpHook('GET', 'carrerjet')
-        resp = hook.run(data={
-            'location': '*',
-            'keywords': 'data,engineering,software',
-            'user_ip': '00.00.00.00',
-            'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-            'pagesize': 50,
-            'locale_code': 'da_DK',
-        })
+        resp = hook.run(
+            data={
+                'location': '*',
+                'keywords': 'data,engineering,software',
+                'user_ip': '00.00.00.00',
+                'pagesize': 50,
+                'locale_code': 'da_DK',
+            }
+        )
         jobs_jsonified = resp.json()['jobs']
     except Exception as err:
         raise AirflowFailException(err)

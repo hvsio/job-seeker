@@ -82,10 +82,10 @@ def _calculate_state():
 
 
 get_stats = PythonOperator(
-    task_id='get_stats', 
-    python_callable=_calculate_state, 
-    trigger_rule=TriggerRule.ALL_DONE, #show statistics despite failures in the upstream
-    dag=dag
+    task_id='get_stats',
+    python_callable=_calculate_state,
+    trigger_rule=TriggerRule.ALL_DONE,  # show statistics despite failures in the upstream
+    dag=dag,
 )
 
 

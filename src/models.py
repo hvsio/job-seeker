@@ -3,6 +3,7 @@ import os
 from dotenv import find_dotenv, load_dotenv
 from sqlalchemy import DateTime, Integer, MetaData, Sequence, String, Text
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column
+from datetime import datetime
 
 load_dotenv(find_dotenv())
 
@@ -11,6 +12,8 @@ Base = declarative_base(metadata=metadata)
 
 
 class Job(Base):
+    """Tablename defnition for jobs acquired in initial Airflow tasks."""
+
     __tablename__ = os.environ.get('tablename')
 
     id: Mapped[int] = mapped_column(
@@ -25,7 +28,7 @@ class Job(Base):
     type: Mapped[str] = mapped_column(String(255), nullable=True)
     region: Mapped[str] = mapped_column(String(255))
     salary: Mapped[int] = mapped_column(Integer, nullable=True)
-    date: Mapped[str] = mapped_column(DateTime)
+    date: Mapped[datetime] = mapped_column(DateTime)
 
     def __repr__(self) -> str:
-        return f'Job(id={self.id}), city_name={self.job_title}'
+        return f'Job(id={self.id}), job_title={self.job_title}'

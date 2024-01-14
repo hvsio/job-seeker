@@ -19,14 +19,14 @@ This project utilizes Apache Airflow to orchestrate the process of pulling job d
 
 ### `job_ingester.py`
 
-![Alt text](static/graph.png)
+![Alt text](assets/graph.png)
 
 This main DAG orchestrates the entire data pipeline:
 
 - **Tasks**:
   - **Pull and transform data**: 3 tasks (each for different API) ingesting the data and saving a temp .sql file that will populate pulled result in the destination DB. The .sql is overriden on each execution so no redundant sql are generated.
   - **Load Task**: Loads the processed data through an SQL script into the target database or destination.
-  - **Statistics Task**: Depends on the successful execution of all prior tasks. It logs a dict of required statistics, which are retrieved through an SQL query. The dict is logged as the task's log. Example:![Alt text](static/log.png)
+  - **Statistics Task**: Depends on the successful execution of all prior tasks. It logs a dict of required statistics, which are retrieved through an SQL query. The dict is logged as the task's log. Example:![Alt text](assets/log.png)
 
 
 ## Remarks
