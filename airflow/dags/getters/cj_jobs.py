@@ -41,6 +41,7 @@ def get_cj_jobs(**context):
                 'location': '*',
                 'keywords': 'data,engineering,software',
                 'user_ip': '00.00.00.00',
+                'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
                 'pagesize': 50,
                 'locale_code': 'da_DK',
             }
